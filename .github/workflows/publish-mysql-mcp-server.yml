@@ -1,0 +1,47 @@
+# PyPI trusted publishing (OIDC) — no long-lived API token in GitHub secrets.
+#
+# One-time setup on https://pypi.org:
+#   Project: mysql-mcp-server → Settings → Publishing → Add a pending publisher → GitHub
+#     - Owner: your GitHub user or org
+#     - Repository name: this repo (e.g. mysql-mcp-server)
+#     - Workflow name: publish-mysql-mcp-server.yml
+#     - Environment name: leave blank (this workflow does not use a GitHub Environment)
+#
+# If you prefer an Environment (e.g. "pypi") for approval rules, add:
+#   environment: pypi
+#   under `jobs.publish`, create the environment in GitHub repo settings, and set the
+#   same name on PyPI in the trusted publisher form.
+#
+# Release: bump version in mysql_server/pyproject.toml, then either
+#   - Actions → "Publish mysql-mcp-server to PyPI" → Run workflow, or
+#   - git tag mysql-mcp-server-v0.1.0 && git push origin mysql-mcp-server-v0.1.0
+#   (tag suffix should match the version in pyproject.toml, e.g. 0.1.0 → mysql-mcp-server-v0.1.0)
+
+name: Publish mysql-mcp-server to PyPI
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "mysql-mcp-server-v*"
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mysql_server
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+
+      - name: Build sdist and wheel
+        run: uv build
+
+      - name: Publish to PyPI
+        run: uv publish --trusted-publishing always

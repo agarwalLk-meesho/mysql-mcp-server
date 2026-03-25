@@ -1,0 +1,6 @@
+# Local setuptools metadata (do not publish)
+*.egg-info/
+src/*.egg-info/
+.eggs/
+build/
+dist/

@@ -1,0 +1,32 @@
+[project]
+name = "mysql-mcp-server"
+version = "0.1.0"
+description = "MCP server for MySQL — connect to any MySQL host from Cursor, Claude Code, or any MCP client."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+keywords = ["mcp", "mysql", "cursor", "claude", "model-context-protocol"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+dependencies = [
+    "cryptography>=42.0.0",
+    "mcp[cli]>=1.0.0",
+    "pymysql>=1.1.0",
+]
+
+[project.scripts]
+mysql-mcp-server = "mysql_mcp_server:main"
+
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
