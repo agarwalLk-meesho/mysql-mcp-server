@@ -362,7 +362,7 @@ wheels = [
 ]
 
 [[package]]
-name = "mysql-mcp-server"
+name = "mysql-mcp-server-ms"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [

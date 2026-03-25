@@ -1,5 +1,5 @@
 [project]
-name = "mysql-mcp-server"
+name = "mysql-mcp-server-ms"
 version = "0.1.0"
 description = "MCP server for MySQL — connect to any MySQL host from Cursor, Claude Code, or any MCP client."
 readme = "README.md"
@@ -22,7 +22,7 @@ dependencies = [
 ]
 
 [project.scripts]
-mysql-mcp-server = "mysql_mcp_server:main"
+mysql-mcp-server-ms = "mysql_mcp_server:main"
 
 [build-system]
 requires = ["setuptools>=61", "wheel"]

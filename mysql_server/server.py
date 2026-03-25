@@ -1,7 +1,7 @@
 """
 Entry point for MCP clients that run `python server.py` from this directory.
 
-Prefer: `uv run mysql-mcp-server` (see README.md).
+Prefer: `uv run mysql-mcp-server-ms` (see README.md).
 """
 
 from mysql_mcp_server import main

@@ -1,11 +1,13 @@
 # PyPI trusted publishing (OIDC) — no long-lived API token in GitHub secrets.
 #
 # One-time setup on https://pypi.org:
-#   Project: mysql-mcp-server → Settings → Publishing → Add a pending publisher → GitHub
+#   Project: mysql-mcp-server-ms → Settings → Publishing → Add a pending publisher → GitHub
 #     - Owner: your GitHub user or org
-#     - Repository name: this repo (e.g. mysql-mcp-server)
-#     - Workflow name: publish-mysql-mcp-server.yml
+#     - Repository name: this repo (e.g. Lakshita/mysql-mcp-server)
+#     - Workflow name: publish-mysql-mcp-server.yml  (must match PyPI trusted publisher)
 #     - Environment name: leave blank (this workflow does not use a GitHub Environment)
+#
+# Note: PyPI name "mysql-mcp-server" was taken; this package publishes as mysql-mcp-server-ms.
 #
 # If you prefer an Environment (e.g. "pypi") for approval rules, add:
 #   environment: pypi
@@ -13,17 +15,17 @@
 #   same name on PyPI in the trusted publisher form.
 #
 # Release: bump version in mysql_server/pyproject.toml, then either
-#   - Actions → "Publish mysql-mcp-server to PyPI" → Run workflow, or
-#   - git tag mysql-mcp-server-v0.1.0 && git push origin mysql-mcp-server-v0.1.0
-#   (tag suffix should match the version in pyproject.toml, e.g. 0.1.0 → mysql-mcp-server-v0.1.0)
+#   - Actions → "Publish mysql-mcp-server-ms to PyPI" → Run workflow, or
+#   - git tag mysql-mcp-server-ms-v0.1.0 && git push origin mysql-mcp-server-ms-v0.1.0
+#   (tag suffix should match the version in pyproject.toml, e.g. 0.1.0 → mysql-mcp-server-ms-v0.1.0)
 
-name: Publish mysql-mcp-server to PyPI
+name: Publish mysql-mcp-server-ms to PyPI
 
 on:
   workflow_dispatch:
   push:
     tags:
-      - "mysql-mcp-server-v*"
+      - "mysql-mcp-server-ms-v*"
 
 permissions:
   contents: read
