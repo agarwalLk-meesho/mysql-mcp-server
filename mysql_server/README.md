@@ -149,3 +149,27 @@ claude mcp add --transport stdio mysql -- \
 - Prefer **read-only** MySQL users.
 - Use VPN for internal DB hosts.
 - Never commit passwords; use `connect_mysql` in-session or your secret manager.
+
+## Optional: Index-aware query enforcement (reject full scans + non-indexed predicates)
+
+This MCP server can enforce a stricter performance policy for `SELECT` queries (including `WITH ... SELECT`):
+
+- It parses `WHERE` and `JOIN ... ON` predicates.
+- For each predicate column, it checks `INFORMATION_SCHEMA.STATISTICS` to see whether that column belongs to any index on the referenced table.
+- It also runs `EXPLAIN` and rejects the query if MySQL reports a full table scan (`type = ALL`).
+
+Enable it by setting an env var when starting the MCP server:
+
+```json
+"mysql": {
+  "command": "uvx",
+  "args": ["mysql-mcp-server-ms"],
+  "env": {
+    "MCP_MYSQL_ENFORCE_INDEXED_COLUMNS": "1"
+  }
+}
+```
+
+If a query is rejected, you’ll get a message listing the non-indexed predicate columns (best-effort) and suggestions like “add an index” or “rewrite WHERE/JOIN to use an indexed column”.
+
+Note: the mapping from SQL column references to tables is best-effort. For complex queries (subqueries/CTEs with ambiguous column qualifiers), the server may fall back to an `EXPLAIN`-only check and allow the query if no full scan is detected.

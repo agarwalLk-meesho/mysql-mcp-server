@@ -1,6 +1,6 @@
 [project]
 name = "mysql-mcp-server-ms"
-version = "0.1.0"
+version = "0.1.1"
 description = "MCP server for MySQL — connect to any MySQL host from Cursor, Claude Code, or any MCP client."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -19,6 +19,7 @@ dependencies = [
     "cryptography>=42.0.0",
     "mcp[cli]>=1.0.0",
     "pymysql>=1.1.0",
+    "sqlglot>=30.0.3",
 ]
 
 [project.scripts]
